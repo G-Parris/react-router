@@ -9,7 +9,7 @@
     "typecheck": "react-router typegen && tsc",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build/client",
-    "postbuild": "copy build\\client\\index.html build\\client\\404.html"
+    "postbuild": "cpy build/client/index.html build/client/404.html"
   },
   "dependencies": {
     "@react-router/node": "^7.5.0",
@@ -27,6 +27,7 @@
     "@types/node": "^20",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.1",
+    "cpy-cli": "^5.0.0",
     "gh-pages": "^6.3.0",
     "react-router-devtools": "^1.1.0",
     "tailwindcss": "^4.0.0",
