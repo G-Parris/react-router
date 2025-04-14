@@ -1,7 +1,6 @@
-import { useLoaderData } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
 import { supabase } from "~/supabase-client";
 import { useNavigate } from "react-router";
-import { useState, useRef, useEffect } from "react";
 
 interface Task {
   id: string;
@@ -15,39 +14,34 @@ interface Task {
   fileUrl?: string | null;
 }
 
-interface LoaderData {
-  tasks: Task[];
-  error?: string;
-}
-
 export function meta() {
   return [{ title: "Task List" }];
 }
 
-export async function loader() {
-  const { data, error } = await supabase
-    .from("tasks")
-    .select("*")
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    return { error: error.message, tasks: [] };
-  }
-
-  return { tasks: data || [] };
-}
-
 export default function Tasks() {
-  const loaderData = useLoaderData() as LoaderData;
   const navigate = useNavigate();
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [error, setError] = useState<string | undefined>(loaderData.error);
+  const [error, setError] = useState<string | undefined>(undefined);
   const [uploading, setUploading] = useState<{ [key: string]: boolean }>({});
   const fileInputRefs = useRef<{ [key: string]: HTMLInputElement }>({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setTasks(loaderData.tasks || []);
-  }, [loaderData.tasks]);
+    supabase
+      .from("tasks")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .then(({ data, error }) => {
+        if (error) {
+          setError(error.message);
+          setTasks([]);
+        } else {
+          setTasks(data || []);
+          setError(undefined);
+        }
+        setLoading(false);
+      });
+  }, []);
 
   const urgentTasks = tasks.filter(
     (task) =>
@@ -301,6 +295,8 @@ export default function Tasks() {
       )}
     </div>
   );
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="container mx-auto overflow-hidden">
