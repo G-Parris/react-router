@@ -5,7 +5,6 @@ export function meta() {
     return [{ title: "Create Task" }];
 }
 
-
 export async function action({request }: ActionFunctionArgs) {
     const formData = await request.formData();
     const taskName = formData.get("task-name") as string;
@@ -14,12 +13,17 @@ export async function action({request }: ActionFunctionArgs) {
     const taskPriority = formData.get("task-priority") as string;
     const updated_at = new Date().toISOString();
 
-
     if (!taskName || !taskDescription || !taskDueDate || !taskPriority) {
         return {error: "All fields are required."};
     }
 
-    const { error } = await supabase.from("tasks").insert({taskName, taskDescription, taskDueDate, taskPriority, updated_at}).select("*").single();
+    const { error } = await supabase.from("tasks").insert({
+        taskName, 
+        taskDescription, 
+        taskDueDate, 
+        taskPriority,
+        updated_at
+    }).select("*").single();
 
     if (error) {
         return {error: error.message};

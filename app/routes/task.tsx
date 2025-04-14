@@ -41,7 +41,13 @@ export async function action({request, params }: ActionFunctionArgs) {
         }
         return redirect("/");
     } else if (intent === "update") {
-        const { error } = await supabase.from("tasks").update({taskName, taskDescription, taskDueDate, taskPriority, updated_at}).eq("id", params.id);
+        const { error } = await supabase.from("tasks").update({
+            taskName, 
+            taskDescription, 
+            taskDueDate, 
+            taskPriority,
+            updated_at
+        }).eq("id", params.id);
         if (error) {
             return { error: error.message };
         }
