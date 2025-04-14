@@ -5,6 +5,7 @@ import App from './root'
 import Tasks from './routes/tasklist'
 import NewTask from './routes/createtask'
 import Task from './routes/task'
+import './app.css'
 
 const router = createBrowserRouter([
   {
@@ -14,23 +15,27 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Tasks />,
+        loader: Tasks.loader,
       },
       {
         path: 'newtask',
         element: <NewTask />,
+        action: NewTask.action,
       },
       {
         path: 'task/:id',
         element: <Task />,
+        loader: Task.loader,
+        action: Task.action,
       },
     ],
   },
 ], {
-  basename: '/react-router',
+  basename: '/react-router'
 })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>,
+  </React.StrictMode>
 )

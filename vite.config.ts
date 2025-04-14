@@ -6,6 +6,12 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   base: '/react-router/',
   build: {
-    outDir: 'dist'
+    outDir: 'dist',
+    emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
   }
 });
