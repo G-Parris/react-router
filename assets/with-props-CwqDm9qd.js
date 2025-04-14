@@ -1,0 +1,1 @@
+import{v as p,w as t,p as e,x as o,r as s,y as u}from"./chunk-KNED5TY2-C2uOtDDL.js";function i(a){return function(){const r={params:o(),loaderData:e(),actionData:t(),matches:p()};return s.createElement(a,r)}}function m(a){return function(){const r={params:o(),loaderData:e(),actionData:t(),error:u()};return s.createElement(a,r)}}export{m as a,i as w};
