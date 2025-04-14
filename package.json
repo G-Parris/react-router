@@ -9,7 +9,7 @@
     "typecheck": "react-router typegen && tsc",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build/client",
-    "postbuild": "cpy-cli build/client/index.html build/client/404.html --rename=404.html"
+    "postbuild": "copy build\\client\\index.html build\\client\\404.html"
   },
   "dependencies": {
     "@react-router/node": "^7.5.0",
